@@ -51,5 +51,5 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositori
     py3-pip \
     && rm -f /var/lib/containers/storage/libpod/bolt_state.db \
     && sed -i "s/driver = \"overlay\"/driver = \"vfs\"/" /etc/containers/storage.conf \
-    && pip3 install awxkit flake8 pytest \
+    && pip3 install awxkit flake8 pytest coverage \
     && apk add buildah --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/
