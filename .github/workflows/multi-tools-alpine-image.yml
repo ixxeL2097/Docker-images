@@ -52,7 +52,7 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     container: 
-      image: ixxel/multi-tools-alpine:v1.0
+      image: ixxel/multi-tools-alpine:latest
       options: --privileged
     defaults:
       run:
