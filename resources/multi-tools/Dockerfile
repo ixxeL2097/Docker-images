@@ -29,7 +29,8 @@ FROM alpine:latest
 LABEL maintainer="Frederic Spiers <fredspiers@gmail.com>" \
       component="CI/CD tools"
 
-ENV TZ="Europe/Paris"
+ENV TZ="Europe/Paris" \
+    IMG_VERSION="1.0.0"
 
 COPY --from=builder /bin/oc /bin/
 COPY --from=builder /usr/local/bin/jfrog /usr/local/bin/envconsul /usr/local/bin/vault /usr/local/bin/argocd /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/
