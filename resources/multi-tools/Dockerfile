@@ -55,5 +55,5 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositori
     bind-tools \
     && rm -f /var/lib/containers/storage/libpod/bolt_state.db \
     && sed -i "s/driver = \"overlay\"/driver = \"vfs\"/" /etc/containers/storage.conf \
-    && pip3 install awxkit ansible-tower-cli
+    && pip3 install --no-cache-dir awxkit ansible-tower-cli
 #    && apk add buildah --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/
