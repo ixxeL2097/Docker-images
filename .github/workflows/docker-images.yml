@@ -84,3 +84,28 @@ jobs:
           echo -e "${RED}[ CHECK FAILED ] > Something wrong with docker image.${BLANK}"
           exit 1
         fi
+    - name: Transfer image with Skopeo
+      id: transfer-image
+      env:
+        IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
+      run: |
+        echo -e "${BLUE}[ STEP - TRANSFERING IMAGE ] > Transfering docker image with skopeo.${BLANK}"
+        echo -e "${CYAN}[ INFO ] > Skopeo version.${BLANK}"
+        skopeo --version
+        echo -e "${YELLOW}[ EXECUTING ] > Executing transfer.${BLANK}"
+        skopeo login docker.io -u ixxel -p ${{ secrets.DOCKER_IO_PWD }}
+        skopeo copy --insecure-policy \
+                    --format v2s2 \
+                    --dest-tls-verify=false \
+                    containers-storage:localhost/${PROGRAM_NAME}:${APP_VERSION} \
+                    docker://${REPOSITORY}/${PROGRAM_NAME}:${APP_VERSION}
+        echo -e "${CYAN}[ INFO ] > Verifying upload of image ${REPOSITORY}/${PROGRAM_NAME}:${APP_VERSION}.${BLANK}"
+        skopeo_output=$(skopeo list-tags docker://${REPOSITORY}/${PROGRAM_NAME} --tls-verify=false)
+        echo "$skopeo_output" | jq
+        if [[ $(echo ${skopeo_output} | grep -i -E "${APP_VERSION}") ]]
+        then
+          echo -e "${GREEN}[ CHECK SUCCESS ] > Docker image ${REPOSITORY}/${PROGRAM_NAME}:${APP_VERSION} found in repository.${BLANK}"
+        else
+          echo -e "${RED}[ STEP FAILED ] > Something went wrong when uploading the docker image ${REPOSITORY}/${PROGRAM_NAME}:${APP_VERSION}.${BLANK}"
+          exit 1
+        fi
