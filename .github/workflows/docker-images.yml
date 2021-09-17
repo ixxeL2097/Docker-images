@@ -64,7 +64,7 @@ jobs:
     - name: Build image with buildah
       id: build-image
       env:
-        APP_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
+        IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
       run: |
         echo -e "${BLUE}[ STEP - BUILDING IMAGE ] > Building docker image with buildah.${BLANK}"
         echo -e "${CYAN}[ INFO ] > Buildah version.${BLANK}"
