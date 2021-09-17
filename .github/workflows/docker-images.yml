@@ -45,7 +45,7 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     container: 
-      image: ixxel/multi-tools-alpine:v1.0
+      image: ixxel/multi-tools-alpine:latest
       options: --privileged
     defaults:
       run:
@@ -101,6 +101,7 @@ jobs:
                     containers-storage:localhost/${IMAGE_NAME}:${IMAGE_VERSION} \
                     docker://${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION}
 
+        echo -e "${YELLOW}[ EXECUTING ] > Executing ${REPOSITORY}/${IMAGE_NAME}:latest transfer.${BLANK}"
         skopeo copy --insecure-policy \
                     --format v2s2 \
                     --dest-tls-verify=false \
