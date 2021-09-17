@@ -1,6 +1,5 @@
 name: multi-tools-CI
 on:
-on:
   push:
     paths:
       - 'resources/multi-tools/**'
