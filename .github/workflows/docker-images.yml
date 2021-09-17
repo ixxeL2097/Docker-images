@@ -13,7 +13,7 @@ env:
   CYAN: \033[1;36m
   BLANK: \033[0m
   WORKING_DIR: resources/multi-tools
-  IMAGE_NAME: multi-tools
+  IMAGE_NAME: multi-tools-alpine
   REPOSITORY: ixxel
 
 jobs:
@@ -94,11 +94,19 @@ jobs:
         skopeo --version
         echo -e "${YELLOW}[ EXECUTING ] > Executing ${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION} transfer.${BLANK}"
         skopeo login docker.io -u ixxel -p ${{ secrets.DOCKER_IO_PWD }}
+
         skopeo copy --insecure-policy \
                     --format v2s2 \
                     --dest-tls-verify=false \
                     containers-storage:localhost/${IMAGE_NAME}:${IMAGE_VERSION} \
                     docker://${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION}
+
+        skopeo copy --insecure-policy \
+                    --format v2s2 \
+                    --dest-tls-verify=false \
+                    containers-storage:localhost/${IMAGE_NAME}:${IMAGE_VERSION} \
+                    docker://${REPOSITORY}/${IMAGE_NAME}:latest
+
         echo -e "${CYAN}[ INFO ] > Verifying upload of image ${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION}.${BLANK}"
         skopeo_output=$(skopeo list-tags docker://${REPOSITORY}/${IMAGE_NAME} --tls-verify=false)
         echo "$skopeo_output" | jq
