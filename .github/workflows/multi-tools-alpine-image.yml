@@ -1,4 +1,4 @@
-name: multi-tools-CI
+name: multi-tools-img-CI
 on:
   push:
     paths:
@@ -30,7 +30,7 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     container: 
-      image: ixxel/unit-test:v1.1
+      image: ixxel/unit-tests-alpine:latest
     defaults:
       run:
         shell: bash
