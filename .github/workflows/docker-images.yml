@@ -92,20 +92,20 @@ jobs:
         echo -e "${BLUE}[ STEP - TRANSFERING IMAGE ] > Transfering docker image with skopeo.${BLANK}"
         echo -e "${CYAN}[ INFO ] > Skopeo version.${BLANK}"
         skopeo --version
-        echo -e "${YELLOW}[ EXECUTING ] > Executing transfer.${BLANK}"
+        echo -e "${YELLOW}[ EXECUTING ] > Executing ${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION} transfer.${BLANK}"
         skopeo login docker.io -u ixxel -p ${{ secrets.DOCKER_IO_PWD }}
         skopeo copy --insecure-policy \
                     --format v2s2 \
                     --dest-tls-verify=false \
-                    containers-storage:localhost/${PROGRAM_NAME}:${APP_VERSION} \
-                    docker://${REPOSITORY}/${PROGRAM_NAME}:${APP_VERSION}
-        echo -e "${CYAN}[ INFO ] > Verifying upload of image ${REPOSITORY}/${PROGRAM_NAME}:${APP_VERSION}.${BLANK}"
+                    containers-storage:localhost/${IMAGE_NAME}:${IMAGE_VERSION} \
+                    docker://${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION}
+        echo -e "${CYAN}[ INFO ] > Verifying upload of image ${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION}.${BLANK}"
         skopeo_output=$(skopeo list-tags docker://${REPOSITORY}/${PROGRAM_NAME} --tls-verify=false)
         echo "$skopeo_output" | jq
-        if [[ $(echo ${skopeo_output} | grep -i -E "${APP_VERSION}") ]]
+        if [[ $(echo ${skopeo_output} | grep -i -E "${IMAGE_VERSION}") ]]
         then
-          echo -e "${GREEN}[ CHECK SUCCESS ] > Docker image ${REPOSITORY}/${PROGRAM_NAME}:${APP_VERSION} found in repository.${BLANK}"
+          echo -e "${GREEN}[ CHECK SUCCESS ] > Docker image ${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION} found in repository.${BLANK}"
         else
-          echo -e "${RED}[ STEP FAILED ] > Something went wrong when uploading the docker image ${REPOSITORY}/${PROGRAM_NAME}:${APP_VERSION}.${BLANK}"
+          echo -e "${RED}[ STEP FAILED ] > Something went wrong when uploading the docker image ${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION} .${BLANK}"
           exit 1
         fi
