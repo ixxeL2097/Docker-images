@@ -3,9 +3,11 @@ on:
   push:
     paths:
       - 'resources/multi-tools/**'
+      - '.github/workflows/multi-tools-alpine-image.yml'
   pull_request:
     paths:
       - 'resources/multi-tools/**'
+      - '.github/workflows/multi-tools-alpine-image.yml'
   schedule:
     - cron:  '0 0 1 * *'
 
