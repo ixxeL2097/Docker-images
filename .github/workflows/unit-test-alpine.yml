@@ -43,7 +43,7 @@ jobs:
         echo -e "${CYAN}[ INFO ] > Hadolint version.${BLANK}"
         hadolint --version
         echo -e "${YELLOW}[ EXECUTING ] > Executing Dockerfile linting.${BLANK}"
-        hadolint ${WORKING_DIR}/Dockerfile --ignore DL3007 --ignore DL3017 --ignore DL3018 --ignore DL4001 --ignore DL4006 --ignore DL3013
+        hadolint ${WORKING_DIR}/Dockerfile --ignore DL3007 --ignore DL3017 --ignore DL3018 --ignore DL4001 --ignore DL4006 --ignore DL3013 --ignore DL3016 --ignore DL3059
 
   build:
     needs: [test]
