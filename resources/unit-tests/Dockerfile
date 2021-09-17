@@ -3,7 +3,7 @@ FROM alpine:latest AS builder
 RUN apk update --no-cache \
     && apk add curl --no-cache --update \
     && HADOLINT_VERSION=$(curl -sSL "https://github.com/hadolint/hadolint/releases" | sed -n '/Latest release<\/a>/,$p' | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1) \
-    && curl -L https://github.com/hadolint/hadolint/releases/download/$HADOLINT_VERSION/hadolint-Linux-x86_64 -o /usr/local/bin/hadolint \
+    && curl -L "https://github.com/hadolint/hadolint/releases/download/$HADOLINT_VERSION/hadolint-Linux-x86_64" -o /usr/local/bin/hadolint \
     && chmod +x /usr/local/bin/hadolint
 
 FROM alpine:latest
@@ -30,6 +30,6 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositori
     nodejs \
     npm
 
-RUN pip3 install flake8 pytest pytest-cov coverage
+RUN pip3 install --no-cache-dir flake8 pytest pytest-cov coverage
 
 RUN npm install jslint eslint jshint

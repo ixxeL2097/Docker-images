@@ -1,9 +1,12 @@
-name: CI
+name: multi-tools-CI
+on:
 on:
   push:
-    branches: [ main ]
+    paths:
+      - 'resources/multi-tools'
   pull_request:
-    branches: [ main ]
+    paths:
+      - 'resources/multi-tools'
   schedule:
     - cron:  '0 0 1 * *'
 
