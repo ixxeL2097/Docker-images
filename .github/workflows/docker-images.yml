@@ -100,7 +100,7 @@ jobs:
                     containers-storage:localhost/${IMAGE_NAME}:${IMAGE_VERSION} \
                     docker://${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION}
         echo -e "${CYAN}[ INFO ] > Verifying upload of image ${REPOSITORY}/${IMAGE_NAME}:${IMAGE_VERSION}.${BLANK}"
-        skopeo_output=$(skopeo list-tags docker://${REPOSITORY}/${PROGRAM_NAME} --tls-verify=false)
+        skopeo_output=$(skopeo list-tags docker://${REPOSITORY}/${IMAGE_NAME} --tls-verify=false)
         echo "$skopeo_output" | jq
         if [[ $(echo ${skopeo_output} | grep -i -E "${IMAGE_VERSION}") ]]
         then
