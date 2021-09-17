@@ -16,12 +16,12 @@ RUN apk update --no-cache \
     && chmod +x ./kubectl \
     && mv ./kubectl /usr/local/bin/kubectl \
     && VAULT_VERSION=$(curl -sSL "https://releases.hashicorp.com/vault" | grep -oE '/[0-9]+\.[0-9]+\.[0-9]+/' | head -1 | sed 's/\///g') \
-    && wget -q "https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip" -O /tmp/vault_${VAULT_VERSION}_linux_amd64.zip \
-    && unzip /tmp/vault_${VAULT_VERSION}_linux_amd64.zip -d /usr/local/bin \
+    && wget -q "https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip" -O "/tmp/vault_${VAULT_VERSION}_linux_amd64.zip" \
+    && unzip "/tmp/vault_${VAULT_VERSION}_linux_amd64.zip" -d /usr/local/bin \
     && ENVCONSUL_VERSION=$(curl -sSL "https://releases.hashicorp.com/envconsul" | grep -oE '/[0-9]+\.[0-9]+\.[0-9]+/' | head -1 | sed 's/\///g') \
-    && wget -q "https://releases.hashicorp.com/envconsul/${ENVCONSUL_VERSION}/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" -O /tmp/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip \
-    && unzip /tmp/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip -d /usr/local/bin \
-    && curl -fL https://getcli.jfrog.io | sh \
+    && wget -q "https://releases.hashicorp.com/envconsul/${ENVCONSUL_VERSION}/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" -O "/tmp/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" \
+    && unzip "/tmp/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" -d /usr/local/bin \
+    && curl -fL "https://getcli.jfrog.io" | sh \
     && mv jfrog /usr/local/bin
 
 FROM alpine:latest
