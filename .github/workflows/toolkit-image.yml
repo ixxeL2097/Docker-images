@@ -1,4 +1,4 @@
-name: multi-tools-img-CI
+name: toolkit-CI
 on:
   push:
     paths:

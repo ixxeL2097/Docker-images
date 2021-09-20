@@ -2,6 +2,7 @@
 
 [![multi-tools-img-CI](https://github.com/ixxeL2097/Docker-images/actions/workflows/multi-tools-alpine-image.yml/badge.svg)](https://github.com/ixxeL2097/Docker-images/actions/workflows/multi-tools-alpine-image.yml)
 [![unit-tests-img-CI](https://github.com/ixxeL2097/Docker-images/actions/workflows/unit-test-alpine.yml/badge.svg)](https://github.com/ixxeL2097/Docker-images/actions/workflows/unit-test-alpine.yml)
+[![multi-tools-img-CI](https://github.com/ixxeL2097/Docker-images/actions/workflows/toolkit-image.yml/badge.svg)](https://github.com/ixxeL2097/Docker-images/actions/workflows/toolkit-image.yml)
 
 General repository to store multi purpose Dockerfiles.
 
