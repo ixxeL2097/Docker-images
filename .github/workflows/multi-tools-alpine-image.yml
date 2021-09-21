@@ -91,6 +91,18 @@ jobs:
           echo -e "${RED}[ CHECK FAILED ] > Something wrong with docker image.${BLANK}"
           exit 1
         fi
+    - name: Docker image Security check with Trivy
+      id: vuln-check
+      env:
+        IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
+      run: |
+        echo -e "${BLUE}[ STEP - VULNERABILITIES CHECK ] > Scanning ${IMAGE_NAME}:${IMAGE_VERSION} for vulnerabilities.${BLANK}"
+        echo -e "${CYAN}[ INFO ] > Trivy version.${BLANK}"
+        trivy --version | head -n 1
+        echo -e "${YELLOW}[ EXECUTING ] > Updating Trivy DB.${BLANK}"
+        trivy image --download-db-only
+        echo -e "${YELLOW}[ EXECUTING ] > Executing ${IMAGE_NAME}:${IMAGE_VERSION} vuln scan.${BLANK}"
+        trivy image --security-checks vuln,config --light -o result localhost/${IMAGE_NAME}:${IMAGE_VERSION}
     - name: Transfer image with Skopeo
       id: transfer-image
       env:
