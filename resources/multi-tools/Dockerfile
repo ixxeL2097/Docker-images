@@ -22,7 +22,7 @@ RUN apk update --no-cache \
     && wget -q "https://releases.hashicorp.com/envconsul/${ENVCONSUL_VERSION}/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" -O "/tmp/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" \
     && unzip "/tmp/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" -d /usr/local/bin \
     && curl -fL "https://getcli.jfrog.io" | sh \
-    && mv jfrog /usr/local/bin
+    && mv jfrog /usr/local/bin 
 
 FROM alpine:latest
 
@@ -56,5 +56,6 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositori
     bind-tools \
     && rm -f /var/lib/containers/storage/libpod/bolt_state.db \
     && sed -i "s/driver = \"overlay\"/driver = \"vfs\"/" /etc/containers/storage.conf \
-    && pip3 install --no-cache-dir awxkit ansible-tower-cli
+    && pip3 install --no-cache-dir awxkit ansible-tower-cli \
+    && apk add trivy --no-cache --update --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
 #    && apk add buildah --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/
