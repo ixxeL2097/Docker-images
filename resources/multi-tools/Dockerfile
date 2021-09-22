@@ -35,7 +35,6 @@ ENV TZ="Europe/Paris" \
 
 COPY --from=builder /bin/oc /bin/
 COPY --from=builder /usr/local/bin/grype /usr/local/bin/jfrog /usr/local/bin/envconsul /usr/local/bin/vault /usr/local/bin/argocd /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/
-COPY .trivy-template.tpl /tpl/trivy-template.tpl
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
