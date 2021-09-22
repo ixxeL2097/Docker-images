@@ -91,20 +91,20 @@ jobs:
           echo -e "${RED}[ CHECK FAILED ] > Something wrong with docker image.${BLANK}"
           exit 1
         fi
-    - name: Docker image Security check with Trivy
-      id: vuln-check
-      env:
-        IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
-      uses: ixxeL-actions/trivy-scan@main
-      with:
-        scan-type: 'image'
-        image-ref: $IMAGE_VERSION
-        security-checks: 'vuln,config'
-        severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-        output: 'result-img.log'
-        format: 'table'
-        template: ''
-        skip-dirs: '/usr/local/bin,/usr/bin'
+#    - name: Docker image Security check with Trivy
+#      id: vuln-check
+#      env:
+#        IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
+#      uses: ixxeL-actions/trivy-scan@main
+#      with:
+#        scan-type: 'image'
+#        image-ref: $IMAGE_VERSION
+#        security-checks: 'vuln,config'
+#        severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+#        output: 'result-img.log'
+#        format: 'table'
+#        template: ''
+#        skip-dirs: '/usr/local/bin,/usr/bin'
     - name: Transfer image with Skopeo
       id: transfer-image
       env:
