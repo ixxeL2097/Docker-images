@@ -72,25 +72,36 @@ jobs:
       id: build-image
       env:
         IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
-      run: |
-        echo -e "${BLUE}[ STEP - BUILDING IMAGE ] > Building docker image with buildah.${BLANK}"
-        echo -e "${CYAN}[ INFO ] > Buildah version.${BLANK}"
-        buildah --version
-        echo -e "${CYAN}[ INFO ] > Podman version.${BLANK}"
-        podman --version
-        echo -e "${YELLOW}[ EXECUTING ] > Executing build ${IMAGE_VERSION}.${BLANK}"
-        buildah bud -t ${IMAGE_NAME}:${IMAGE_VERSION} ${WORKING_DIR}
-        echo -e "${CYAN}[ INFO ] > Displaying podman built images.${BLANK}"
-        podman images
-        echo -e "${YELLOW}[ EXECUTING ] > Checking docker image execution.${BLANK}"
-        podman run --rm ${IMAGE_NAME}:${IMAGE_VERSION} cat /etc/os-release
-        if [[ $? = 0 ]]
-        then
-          echo -e "${GREEN}[ CHECK SUCCESS ] > Docker image working properly.${BLANK}"
-        else
-          echo -e "${RED}[ CHECK FAILED ] > Something wrong with docker image.${BLANK}"
-          exit 1
-        fi
+      uses: ixxeL-actions/buildah-bud@main
+      with:
+        tag: '${IMAGE_NAME}:${IMAGE_VERSION}'
+        file: '""'
+        format: 'oci'
+        build-arg: ''
+        working-dir: '${WORKING_DIR}'
+#    - name: Build image with buildah
+#      id: build-image
+#      env:
+#        IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
+#      run: |
+#        echo -e "${BLUE}[ STEP - BUILDING IMAGE ] > Building docker image with buildah.${BLANK}"
+#        echo -e "${CYAN}[ INFO ] > Buildah version.${BLANK}"
+#        buildah --version
+#        echo -e "${CYAN}[ INFO ] > Podman version.${BLANK}"
+#        podman --version
+#        echo -e "${YELLOW}[ EXECUTING ] > Executing build ${IMAGE_VERSION}.${BLANK}"
+#        buildah bud -t ${IMAGE_NAME}:${IMAGE_VERSION} ${WORKING_DIR}
+#        echo -e "${CYAN}[ INFO ] > Displaying podman built images.${BLANK}"
+#        podman images
+#        echo -e "${YELLOW}[ EXECUTING ] > Checking docker image execution.${BLANK}"
+#        podman run --rm ${IMAGE_NAME}:${IMAGE_VERSION} cat /etc/os-release
+#        if [[ $? = 0 ]]
+#        then
+#          echo -e "${GREEN}[ CHECK SUCCESS ] > Docker image working properly.${BLANK}"
+#        else
+#          echo -e "${RED}[ CHECK FAILED ] > Something wrong with docker image.${BLANK}"
+#          exit 1
+#        fi
 #    - name: Docker image Security check with Trivy
 #      id: vuln-check
 #      env:
