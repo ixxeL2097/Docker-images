@@ -87,7 +87,7 @@ jobs:
       with:
         image-id: 'localhost/${IMAGE_NAME}:${IMAGE_VERSION}'
         transport: 'oci-archive'
-        destination: '/tmp/${IMAGE_NAME}:${IMAGE_VERSION}.tar'
+        destination: '/tmp/${IMAGE_NAME}-${IMAGE_VERSION}.tar'
         format: '""'
     - name: Security scan for docker image
       id: scan-image
@@ -95,7 +95,7 @@ jobs:
         IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
       uses: ixxeL-actions/grype-scan@main
       with:
-        image-ref: '/tmp/${IMAGE_NAME}:${IMAGE_VERSION}.tar'
+        image-ref: '/tmp/${IMAGE_NAME}-${IMAGE_VERSION}.tar'
         transport: 'oci-archive'
         fail-on: '""'
         output: 'table'
