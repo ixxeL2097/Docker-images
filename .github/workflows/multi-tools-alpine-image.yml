@@ -102,7 +102,7 @@ jobs:
         scope: 'AllLayers'
         template: '""'
         verbose: ''
-    - name: Transfer image with Skopeo (${IMAGE_VERSION})
+    - name: Transfer image with Skopeo
       id: transfer-image-version
       env:
         IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
