@@ -103,7 +103,7 @@ jobs:
         template: '""'
         verbose: ''
     - name: Transfer image with Skopeo (${IMAGE_VERSION})
-      id: transfer-image
+      id: transfer-image-version
       env:
         IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
       uses: ixxeL-actions/skopeo-copy@main
@@ -115,7 +115,7 @@ jobs:
         dst-transport: 'docker'
         dst-creds: 'ixxel:${{ secrets.DOCKER_IO_PWD }}'
     - name: Transfer image with Skopeo (latest)
-      id: transfer-image
+      id: transfer-image-latest
       env:
         IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
       uses: ixxeL-actions/skopeo-copy@main
