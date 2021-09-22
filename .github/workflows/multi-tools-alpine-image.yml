@@ -95,14 +95,16 @@ jobs:
       id: vuln-check
       env:
         IMAGE_VERSION: ${{ steps.build-version.outputs.IMAGE_VERSION }}
-      run: |
-        echo -e "${BLUE}[ STEP - VULNERABILITIES CHECK ] > Scanning ${IMAGE_NAME}:${IMAGE_VERSION} for vulnerabilities.${BLANK}"
-        echo -e "${CYAN}[ INFO ] > Trivy version.${BLANK}"
-        trivy --version | head -n 1
-        echo -e "${YELLOW}[ EXECUTING ] > Updating Trivy DB.${BLANK}"
-        trivy image --download-db-only
-        echo -e "${YELLOW}[ EXECUTING ] > Executing ${IMAGE_NAME}:${IMAGE_VERSION} vuln scan.${BLANK}"
-        trivy image --security-checks vuln,config --light -o result ${IMAGE_NAME}:${IMAGE_VERSION}
+      uses: ixxeL-actions/trivy-scan@main
+      with:
+        scan-type: 'image'
+        image-ref: $IMAGE_VERSION
+        security-checks: 'vuln,config'
+        severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+        output: 'result-img.log'
+        format: 'table'
+        template: ''
+        skip-dirs: '/usr/local/bin,/usr/bin'
     - name: Transfer image with Skopeo
       id: transfer-image
       env:

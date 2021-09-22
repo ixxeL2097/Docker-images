@@ -22,7 +22,8 @@ RUN apk update --no-cache \
     && wget -q "https://releases.hashicorp.com/envconsul/${ENVCONSUL_VERSION}/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" -O "/tmp/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" \
     && unzip "/tmp/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip" -d /usr/local/bin \
     && curl -fL "https://getcli.jfrog.io" | sh \
-    && mv jfrog /usr/local/bin 
+    && mv jfrog /usr/local/bin \
+    && curl -sSfL "https://raw.githubusercontent.com/anchore/grype/main/install.sh" | sh -s -- -b /usr/local/bin
 
 FROM alpine:latest
 
@@ -33,7 +34,8 @@ ENV TZ="Europe/Paris" \
     IMG_VERSION="1.0.0"
 
 COPY --from=builder /bin/oc /bin/
-COPY --from=builder /usr/local/bin/jfrog /usr/local/bin/envconsul /usr/local/bin/vault /usr/local/bin/argocd /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/
+COPY --from=builder /usr/local/bin/grype /usr/local/bin/jfrog /usr/local/bin/envconsul /usr/local/bin/vault /usr/local/bin/argocd /usr/local/bin/helm /usr/local/bin/kubectl /usr/local/bin/
+COPY .trivy-template.tpl /tpl/trivy-template.tpl
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
@@ -58,4 +60,3 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositori
     && sed -i "s/driver = \"overlay\"/driver = \"vfs\"/" /etc/containers/storage.conf \
     && pip3 install --no-cache-dir awxkit ansible-tower-cli \
     && apk add trivy --no-cache --update --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing
-#    && apk add buildah --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/
