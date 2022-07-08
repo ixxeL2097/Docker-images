@@ -1,4 +1,5 @@
-#FROM rancher/k3s:v1.0.0 as base
+#FROM rancher/k3s:v1.0.0 as base  
+#test
 FROM rancher/k3s:v1.21.2-k3s1 as base
 
 # https://github.com/rancher/k3s/issues/390
