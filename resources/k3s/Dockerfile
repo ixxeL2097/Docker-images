@@ -8,7 +8,6 @@ FROM rancher/k3s:v1.21.2-k3s1 as base
 # is easier to work with than scratch.
 #FROM alpine:3.10
 FROM alpine:3.14
-# test2
 # Do the same stuff in the k3s-scratch image's
 # final stage.
 # https://github.com/rancher/k3s/blob/master/package/Dockerfile
